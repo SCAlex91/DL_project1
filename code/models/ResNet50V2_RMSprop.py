@@ -1,4 +1,6 @@
 #TRASNFER LEARNING WITH A PRETRAINED CONVNET
+#Adjusted from the following tutorial https://www.tensorflow.org/tutorials/images/transfer_learning
+
 
 #Inports general
 import os
