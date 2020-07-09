@@ -67,6 +67,7 @@ for image_batch, label_batch in train_batches.take(1):
 image_batch.shape
 
 
+#Early stopping callback declaration
 early_stopping_callback = EarlyStopping(
         monitor='val_accuracy',    # Stop training when `val_loss` is no longer improving
         min_delta=0,               # "no longer improving" being defined as "no better than 0 less"
