@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 #tensorflow
 import tensorflow as tf
+from tensorflow.keras import layers
 from tensorflow.keras.callbacks import EarlyStopping
 
 ## Hyperparameters
@@ -51,6 +52,14 @@ def format_example(image, label):
   image = tf.image.resize(image, (IMG_SIZE, IMG_SIZE))
   return image, label
 
+#Data augmentation
+data_augmentation = tf.keras.Sequential(
+    [
+        layers.experimental.preprocessing.RandomFlip("horizontal"),
+        layers.experimental.preprocessing.RandomRotation(0.1),
+    ]
+)
+
 #Apply this to each item on the dataset using map method
 train = raw_train.map(format_example)
 validation = raw_validation.map(format_example)
@@ -60,6 +69,10 @@ test = raw_test.map(format_example)
 train_batches = train.shuffle(SHUFFLE_BUFFER_SIZE).batch(BATCH_SIZE)
 validation_batches = validation.batch(BATCH_SIZE)
 test_batches = test.batch(BATCH_SIZE)
+
+#Apply augmentation
+augmented_train_ds = train_batches.map(
+  lambda x, y: (data_augmentation(x, training=True), y))
 
 #Inspect a batch of data
 for image_batch, label_batch in train_batches.take(1):
@@ -89,8 +102,8 @@ IMG_SHAPE = (IMG_SIZE, IMG_SIZE, 3)
 callbacks = [early_stopping_callback]
 
 
-# Create the base model from the pre-trained model ResNet50V2
-base_model = tf.keras.applications.ResNet50V2(input_shape=IMG_SHAPE,
+# Create the base model from the pre-trained model DenseNet201
+base_model = tf.keras.applications.DenseNet201(input_shape=IMG_SHAPE,
                                                include_top=False,
                                                weights='imagenet')
 
@@ -137,7 +150,7 @@ loss0,accuracy0 = model.evaluate(validation_batches, steps = VALIDATION_STEPS)
 print("initial loss: {:.2f}".format(loss0))
 print("initial accuracy: {:.2f}".format(accuracy0))
 
-history = model.fit(train_batches, callbacks=callbacks,
+history = model.fit(augmented_train_ds, callbacks=callbacks,
                     epochs=EPOCHS,
                     validation_data=validation_batches)
 

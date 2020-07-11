@@ -13,6 +13,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 ## Hyperparameters
 EPOCHS = 10
 BATCH_SIZE = 32
+SHUFFLE_BUFFER_SIZE = 1000
 NODES_HIDDEN_0 = 512
 BASE_TRAINABLE = False
 PATIENCE = 3
@@ -55,8 +56,6 @@ validation = raw_validation.map(format_example)
 test = raw_test.map(format_example)
 
 #Shuffle and batch the data
-BATCH_SIZE = 32
-SHUFFLE_BUFFER_SIZE = 1000
 train_batches = train.shuffle(SHUFFLE_BUFFER_SIZE).batch(BATCH_SIZE)
 validation_batches = validation.batch(BATCH_SIZE)
 test_batches = test.batch(BATCH_SIZE)
