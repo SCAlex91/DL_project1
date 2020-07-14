@@ -36,7 +36,6 @@ tfds.disable_progress_bar()
 )
 
 get_label_name = metadata.features['label'].int2str
-get_num_train_ex = metadata.features['examples']
 
 
 for image, label in raw_train.take(2):
