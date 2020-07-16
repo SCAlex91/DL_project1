@@ -1,5 +1,3 @@
 # Deep Learning course - 1st Practical
 
-## In this project, a comparison of three Deep Learning architectures is conducted. These architectures consist of Xception, ResNet50V2 and DenseNet201. Their performance is evaluated using the validation accuracy metric. These architectures are combined with RMSProp and Adam optimizers to test for optimization effects as well as augmentation technique to test for regularization effects.
-
-## For this project Transfer Learning is being employed. The extracted features of the convolutional network pre-trained on ImageNet dataset are used to predict the classes for images of cats vs dogs dataset.
+## This project is concerned with the examination and comparison of deep learning architectures such as DenseNet201, Xception and ResNet50V2 with different settings, hyperparameters, optimizers and regularization techniques. We use transfer learning of the pre-trained models on the ImageNet dataset and perform a binary classification task on the image dataset of cats versus dogs. We evaluate the performance of all the tested models based on the validation accuracy metric.
